@@ -5,6 +5,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+    public static final String API_key = "10ffe9e6913b2ac1529992c5618ca106";
     private static Retrofit instance;
 
     public static Retrofit getInstance() {

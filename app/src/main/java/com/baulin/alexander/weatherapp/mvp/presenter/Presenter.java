@@ -21,13 +21,19 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
 
     public void test() {
         compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(data.getPostsFromJSON()
+        compositeDisposable.add(data.getCitiesWeather(24.0,48.0,36.0,52.0,17)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RootWeatherCities>() {
                     @Override
                     public void accept(RootWeatherCities rootWeatherObject) throws Exception {
-                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(0).wind.speed);
+                        Log.d("myLogs", "-------------------");
+                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(0).name);
+                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(1).name);
+                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(2).name);
+                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(3).name);
+                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(4).name);
+                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(5).name);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -37,7 +43,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                 })
         );
 
-        compositeDisposable.add(data.getWeatherCityFromJSON()
+        compositeDisposable.add(data.getCurrentCityWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RootWeatherCity>() {

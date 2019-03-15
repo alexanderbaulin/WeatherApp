@@ -7,7 +7,7 @@ import io.reactivex.Observable;
 
 public interface Model {
 
-    Observable<RootWeatherCities> getPostsFromJSON();
-    Observable<RootWeatherCity> getWeatherCityFromJSON();
+    Observable<RootWeatherCities> getCitiesWeather(double lon_left, double lat_bottom, double lon_right, double lat_top, float zoom);
+    Observable<RootWeatherCity> getCurrentCityWeather();
 
 }
