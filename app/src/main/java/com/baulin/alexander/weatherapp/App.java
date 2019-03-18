@@ -1,6 +1,7 @@
 package com.baulin.alexander.weatherapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -15,14 +16,23 @@ public class App extends Application {
     private static App instance;
 
     public static boolean isGooglePlayServiceAvailable() {
-        int availability = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(instance.getApplicationContext());
+        int availability = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
         return (availability == ConnectionResult.SUCCESS);
 
     }
 
-    public static boolean isLocationPermissionGranted() {
-        int permission = ContextCompat.checkSelfPermission(instance.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+    public static boolean isFineLocationPermissionGranted() {
+        int permission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
         return permission == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean isCoarseLocationPermissionGranted() {
+        int permission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        return permission == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static Context getContext() {
+        return instance.getApplicationContext();
     }
 
     @Override
@@ -30,6 +40,8 @@ public class App extends Application {
         super.onCreate();
         instance = this;
     }
+
+
 
 
 

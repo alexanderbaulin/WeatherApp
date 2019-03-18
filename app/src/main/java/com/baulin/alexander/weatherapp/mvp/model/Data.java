@@ -7,11 +7,13 @@ import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.RootWeatherCiti
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
 import com.baulin.alexander.weatherapp.mvp.model.retrofit.RetrofitAPI;
 import com.baulin.alexander.weatherapp.mvp.model.retrofit.RetrofitClient;
+import com.google.android.gms.location.LocationCallback;
 
 import io.reactivex.Observable;
 
 public class Data implements Model {
     private RetrofitAPI client = RetrofitClient.getInstance().create(RetrofitAPI.class);
+    private DeviceLocation deviceLocation = new DeviceLocation();
 
     @Override
     public Observable<RootWeatherCities> getCitiesWeather(double lon_left, double lat_bottom, double lon_right, double lat_top, float zoom) {
@@ -28,5 +30,16 @@ public class Data implements Model {
     @Override
     public Observable<RootWeatherCity> getCurrentCityWeather() {
         return client.getCityWeatherFromJSON("Kiev", RetrofitClient.API_key);
+    }
+
+    @Override
+    public void getDeviceLocation(LocationCallback locationCallback) {
+        deviceLocation.setLocationCallback(locationCallback);
+
+    }
+
+    @Override
+    public void stopDeviceLocationTracking() {
+        deviceLocation.removeLocationUpdates();
     }
 }
