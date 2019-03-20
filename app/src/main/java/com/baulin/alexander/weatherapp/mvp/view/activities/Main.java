@@ -2,37 +2,52 @@ package com.baulin.alexander.weatherapp.mvp.view.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.R;
+import com.baulin.alexander.weatherapp.mvp.interfaces.View;
+import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.WeatherCityItem;
 import com.baulin.alexander.weatherapp.mvp.presenter.Presenter;
+import com.baulin.alexander.weatherapp.mvp.view.adapter.WeatherAdapter;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+
+import java.util.List;
 
 
-public class Main extends AppCompatActivity implements OnMapReadyCallback {
+public class Main extends AppCompatActivity implements OnMapReadyCallback, View {
 
 
     Presenter presenter;
     GoogleMap map;
 
     private Location location;
+    RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerView = findViewById(R.id.recView);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
 
         presenter = new Presenter();
        // presenter.test();
@@ -59,10 +74,13 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
 
                 location = locationResult.getLastLocation();
                 presenter.stopDeviceLocationTracking();
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
+                LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
+                CameraUpdate position = CameraUpdateFactory.newLatLngZoom(coordinates , 12);
+                map.moveCamera(position);
             }
         };
         presenter.getDeviceLocation(mLocationCallback);
+        presenter.setActivity(this);
     }
 
     @SuppressLint("MissingPermission")
@@ -74,10 +92,29 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback {
             public void onCameraIdle() {
                 Log.d("camera", "onCameraIdle " + map.getCameraPosition().target + "zoom " + map.getCameraPosition().zoom);
                 Log.d("camera", "visible bounds " + map.getProjection().getVisibleRegion().latLngBounds);
-                presenter.testWeatherCities(map.getProjection().getVisibleRegion().latLngBounds, map.getCameraPosition().zoom);
+
+                LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+                float zoom = map.getCameraPosition().zoom;
+
+                presenter.getCitiesWeather(bounds, zoom);
             }
 
         });
         map.setMyLocationEnabled(true);
+    }
+
+    @Override
+    public void display(List<WeatherCityItem> list) {
+        Log.d("myLogs", "-------------------");
+        for(int i = 0; i < list.size(); i++) {
+            Log.d("myLogs", "city name = " + list.get(i).name);
+            Log.d("myLogs", " " + list.get(i).weather.get(0).icon);
+            //Log.d("myLogs", "city name = " + list.get(i).wind.deg);
+            //Log.d("myLogs", "weaterCityItemExt size = " + list.get(0).id);
+
+        }
+        WeatherAdapter adapter = new WeatherAdapter();
+        adapter.setData(list);
+        recyclerView.setAdapter(adapter);
     }
 }

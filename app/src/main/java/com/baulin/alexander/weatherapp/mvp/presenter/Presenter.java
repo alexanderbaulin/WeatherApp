@@ -1,14 +1,19 @@
 package com.baulin.alexander.weatherapp.mvp.presenter;
 
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
+import com.baulin.alexander.weatherapp.mvp.interfaces.View;
 import com.baulin.alexander.weatherapp.mvp.model.Data;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.RootWeatherCities;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
+import com.baulin.alexander.weatherapp.mvp.view.activities.Main;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.maps.model.LatLngBounds;
+
+import java.lang.ref.WeakReference;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -20,7 +25,13 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
     Model data = new Data();
     private CompositeDisposable compositeDisposable;
 
+    private WeakReference<View> view;
 
+    public void setActivity(Main activity) {
+        view = new WeakReference<View>(activity);
+    }
+
+    /*
     public void test() {
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(data.getCitiesWeather(24.0,48.0,36.0,52.0,17)
@@ -48,12 +59,13 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
         compositeDisposable.add(data.getCurrentCityWeather()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<RootWeatherCity>() {
-                       @Override
-                       public void accept(RootWeatherCity rootWeatherCity) throws Exception {
+                .subscribe(new Consumer<RootWeatherCity>()
+                           {
+                               @Override
+                               public void accept(RootWeatherCity rootWeatherCity) throws Exception {
                                    Log.d("myLogs", "kiev = " + rootWeatherCity.name);
-                        }
-                        }, new Consumer<Throwable>() {
+                               }
+                           }, new Consumer<Throwable>() {
                                @Override
                                public void accept(Throwable throwable) throws Exception {
                                    Log.d("myLogs", "Error: " + throwable.getMessage() + ". Check Internet connection");
@@ -61,22 +73,21 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                            }
                 )
         );
+
     }
+    */
 
 
     @Override
-    public void testWeatherCities(LatLngBounds latLngBounds, float zoom) {
+    public void getCitiesWeather(LatLngBounds latLngBounds, float zoom) {
         compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(data.getCitiesWeather(latLngBounds.southwest.longitude,latLngBounds.southwest.latitude,latLngBounds.northeast.longitude,latLngBounds.northeast.latitude, zoom)
+        compositeDisposable.add(data.getCitiesWeather(latLngBounds, zoom)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RootWeatherCities>() {
                     @Override
                     public void accept(RootWeatherCities rootWeatherObject) throws Exception {
-                        Log.d("myLogs", "-------------------");
-                        for(int i = 0; i < rootWeatherObject.list.size(); i++) {
-                            Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(i).name);
-                        }
+                        view.get().display(rootWeatherObject.list);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

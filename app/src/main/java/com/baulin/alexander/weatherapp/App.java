@@ -41,6 +41,10 @@ public class App extends Application {
         instance = this;
     }
 
+    public static String getStringFrom(int stringRes) {
+        return getContext().getResources().getString(stringRes);
+    }
+
 
 
 

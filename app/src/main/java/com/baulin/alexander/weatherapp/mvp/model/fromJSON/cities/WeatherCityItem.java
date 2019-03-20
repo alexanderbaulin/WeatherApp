@@ -13,7 +13,7 @@ public class WeatherCityItem {
     public Rain rain;
     public Snow snow;
     public Clouds clouds;
-    public List<WeatherCityItemExtend> weatherCityItemExtend;
+    public List<WeatherCityItemExtend> weather;
 
     public int getId() {
         return id;
@@ -87,11 +87,11 @@ public class WeatherCityItem {
         this.clouds = clouds;
     }
 
-    public List<WeatherCityItemExtend> getWeatherCityItemExtend() {
-        return weatherCityItemExtend;
+    public List<WeatherCityItemExtend> getWeather() {
+        return weather;
     }
 
-    public void setWeatherCityItemExtend(List<WeatherCityItemExtend> weatherCityItemExtend) {
-        this.weatherCityItemExtend = weatherCityItemExtend;
+    public void setWeather(List<WeatherCityItemExtend> weather) {
+        this.weather = weather;
     }
 }
