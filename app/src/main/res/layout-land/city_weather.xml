@@ -12,8 +12,8 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:padding="8dp"
         >
 
@@ -28,11 +28,7 @@
             android:textStyle="bold" />
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+
 
             <ImageView
                 android:id="@+id/imgWeather"
@@ -47,16 +43,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 />
 
-        </LinearLayout>
+
 
     </LinearLayout>
 
 
 
 </android.support.v7.widget.CardView>
-
-
-
-
 
 

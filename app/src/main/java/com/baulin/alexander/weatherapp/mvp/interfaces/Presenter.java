@@ -11,4 +11,6 @@ public interface Presenter {
     void getDeviceLocation(LocationCallback locationCallback);
     void stopDeviceLocationTracking();
     void setActivity(Main activity);
+
+    void getCurrentCityWeather(String cityName);
 }

@@ -1,7 +1,5 @@
 package com.baulin.alexander.weatherapp.mvp.model;
 
-import android.util.Log;
-
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.RootWeatherCities;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
@@ -35,8 +33,8 @@ public class Data implements Model {
     }
 
     @Override
-    public Observable<RootWeatherCity> getCurrentCityWeather() {
-        return client.getCityWeatherFromJSON("Kiev", RetrofitClient.API_key);
+    public Observable<RootWeatherCity> getCurrentCityWeather(String cityName) {
+        return client.getCityWeatherFromJSON(cityName, RetrofitClient.API_key);
     }
 
     @Override

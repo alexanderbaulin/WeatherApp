@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 public interface Model {
 
     Observable<RootWeatherCities> getCitiesWeather(LatLngBounds bounds, float zoom);
-    Observable<RootWeatherCity> getCurrentCityWeather();
+    Observable<RootWeatherCity> getCurrentCityWeather(String cityName);
     void getDeviceLocation(LocationCallback locationCallback);
     void stopDeviceLocationTracking();
 

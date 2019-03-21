@@ -29,7 +29,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import java.util.List;
 
 
-public class Main extends AppCompatActivity implements OnMapReadyCallback, View {
+public class Main extends AppCompatActivity implements OnMapReadyCallback, View, WeatherAdapter.OnItemClickListener {
 
 
     Presenter presenter;
@@ -106,15 +106,25 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View 
     @Override
     public void display(List<WeatherCityItem> list) {
         Log.d("myLogs", "-------------------");
+        Log.d("myLogs", "size = " + list.size());
         for(int i = 0; i < list.size(); i++) {
             Log.d("myLogs", "city name = " + list.get(i).name);
-            Log.d("myLogs", " " + list.get(i).weather.get(0).icon);
+            Log.d("myLogs", "city id = " + list.get(i).id + " " + list.get(i).weather.get(0).id);
+            //Log.d("myLogs", " " + list.get(i).weather.get(0).icon);
             //Log.d("myLogs", "city name = " + list.get(i).wind.deg);
             //Log.d("myLogs", "weaterCityItemExt size = " + list.get(0).id);
 
         }
         WeatherAdapter adapter = new WeatherAdapter();
         adapter.setData(list);
+        adapter.setOnClickListener(this);
         recyclerView.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void onItemClick(String cityName) {
+        Log.d("click", "click + " + cityName);
+        presenter.getCurrentCityWeather(cityName);
     }
 }

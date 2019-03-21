@@ -31,6 +31,29 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
         view = new WeakReference<View>(activity);
     }
 
+    @Override
+    public void getCurrentCityWeather(String cityName) {
+        compositeDisposable = new CompositeDisposable();
+        compositeDisposable.add(data.getCurrentCityWeather(cityName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RootWeatherCity>() {
+                               @Override
+                               public void accept(RootWeatherCity rootWeatherCity) throws Exception {
+                                   Log.d("onClick", "getCurrentCity " + rootWeatherCity.name);
+                               }
+                           }, new Consumer<Throwable>() {
+                               @Override
+                               public void accept(Throwable throwable) throws Exception {
+
+                               }
+                           }
+
+                )
+
+        );
+    }
+
     /*
     public void test() {
         compositeDisposable = new CompositeDisposable();
@@ -96,6 +119,26 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                     }
                 })
         );
+        /*
+        compositeDisposable.add(data.getCurrentCityWeather()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<RootWeatherCity>()
+                           {
+                               @Override
+                               public void accept(RootWeatherCity rootWeatherCity) throws Exception {
+                                   Log.d("town", "--------  drody = " + rootWeatherCity.name);
+                                   Log.d("town", "lat " + rootWeatherCity.coord.lat + " lon " + rootWeatherCity.coord.lon);
+                               }
+                           }, new Consumer<Throwable>() {
+                               @Override
+                               public void accept(Throwable throwable) throws Exception {
+                                   Log.d("town", "Error: " + throwable.getMessage() + ". Check Internet connection");
+                               }
+                           }
+                )
+        );
+        */
     }
 
     @Override
