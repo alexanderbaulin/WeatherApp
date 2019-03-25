@@ -2,6 +2,10 @@ package com.baulin.alexander.weatherapp.mvp.presenter;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.net.NetworkCapabilities;
 import android.util.Log;
 
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
@@ -41,6 +45,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                                @Override
                                public void accept(RootWeatherCity rootWeatherCity) throws Exception {
                                    Log.d("onClick", "getCurrentCity " + rootWeatherCity.name);
+                                   view.get().display(rootWeatherCity);
                                }
                            }, new Consumer<Throwable>() {
                                @Override
@@ -53,53 +58,6 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
 
         );
     }
-
-    /*
-    public void test() {
-        compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(data.getCitiesWeather(24.0,48.0,36.0,52.0,17)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<RootWeatherCities>() {
-                    @Override
-                    public void accept(RootWeatherCities rootWeatherObject) throws Exception {
-                        Log.d("myLogs", "-------------------");
-                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(0).name);
-                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(1).name);
-                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(2).name);
-                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(3).name);
-                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(4).name);
-                        Log.d("myLogs", "wind speed = " + rootWeatherObject.list.get(5).name);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.d("myLogs", "Error: " + throwable.getMessage() + ". Check Internet connection");
-                    }
-                })
-        );
-
-        compositeDisposable.add(data.getCurrentCityWeather()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<RootWeatherCity>()
-                           {
-                               @Override
-                               public void accept(RootWeatherCity rootWeatherCity) throws Exception {
-                                   Log.d("myLogs", "kiev = " + rootWeatherCity.name);
-                               }
-                           }, new Consumer<Throwable>() {
-                               @Override
-                               public void accept(Throwable throwable) throws Exception {
-                                   Log.d("myLogs", "Error: " + throwable.getMessage() + ". Check Internet connection");
-                               }
-                           }
-                )
-        );
-
-    }
-    */
-
 
     @Override
     public void getCitiesWeather(LatLngBounds latLngBounds, float zoom) {
@@ -119,26 +77,6 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                     }
                 })
         );
-        /*
-        compositeDisposable.add(data.getCurrentCityWeather()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<RootWeatherCity>()
-                           {
-                               @Override
-                               public void accept(RootWeatherCity rootWeatherCity) throws Exception {
-                                   Log.d("town", "--------  drody = " + rootWeatherCity.name);
-                                   Log.d("town", "lat " + rootWeatherCity.coord.lat + " lon " + rootWeatherCity.coord.lon);
-                               }
-                           }, new Consumer<Throwable>() {
-                               @Override
-                               public void accept(Throwable throwable) throws Exception {
-                                   Log.d("town", "Error: " + throwable.getMessage() + ". Check Internet connection");
-                               }
-                           }
-                )
-        );
-        */
     }
 
     @Override
@@ -149,5 +87,13 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
     @Override
     public void stopDeviceLocationTracking() {
         data.stopDeviceLocationTracking();
+    }
+
+    public class NetworkChangeReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
     }
 }

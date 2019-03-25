@@ -14,6 +14,7 @@ import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.R;
 import com.baulin.alexander.weatherapp.mvp.interfaces.View;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.WeatherCityItem;
+import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
 import com.baulin.alexander.weatherapp.mvp.presenter.Presenter;
 import com.baulin.alexander.weatherapp.mvp.view.adapter.WeatherAdapter;
 import com.google.android.gms.location.LocationCallback;
@@ -45,16 +46,17 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recView);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
+        SupportMapFragment  fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        presenter = new Presenter();
-       // presenter.test();
-
-        SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (fragment != null) {
             fragment.getMapAsync(this);
+            if(App.haveNetworkConnection()) {
+                setEmptyScreen(false);
+            } else {
+                setEmptyScreen(true);
+            }
         }
 
         if (App.isGooglePlayServiceAvailable()) Log.d("myLogs", "ok");
@@ -65,7 +67,6 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         if(App.isCoarseLocationPermissionGranted())
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
-
 
         LocationCallback mLocationCallback = new LocationCallback() {
             @Override
@@ -79,6 +80,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
                 map.moveCamera(position);
             }
         };
+
+        presenter = new Presenter();
         presenter.getDeviceLocation(mLocationCallback);
         presenter.setActivity(this);
     }
@@ -121,10 +124,27 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public void display(RootWeatherCity rootWeatherCity) {
+        Log.d("click", "display " + rootWeatherCity.name);
+
+    }
 
     @Override
     public void onItemClick(String cityName) {
         Log.d("click", "click + " + cityName);
         presenter.getCurrentCityWeather(cityName);
+    }
+
+    private void setEmptyScreen(boolean setEmpty) {
+        SupportMapFragment  fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        if(fragment == null) return;
+        if(setEmpty) {
+            fragment.getView().setVisibility(android.view.View.INVISIBLE);
+            recyclerView.setVisibility(android.view.View.INVISIBLE);
+        } else {
+            fragment.getView().setVisibility(android.view.View.VISIBLE);
+            recyclerView.setVisibility(android.view.View.VISIBLE);
+        }
     }
 }

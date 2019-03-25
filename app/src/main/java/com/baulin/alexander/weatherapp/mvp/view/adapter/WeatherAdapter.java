@@ -41,21 +41,15 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
     public void onBindViewHolder(@NonNull final WeatherViewHolder holder, final int position) {
         final WeatherCityItem item = cities.get(position);
 
-        holder.city.setText(item.name);
-
-        String averageTemperature = String.valueOf(item.main.temp) + " °C";
-        holder.temperature.setText(averageTemperature);
-
-        //holder.temperature.setText(String.format(App.getStringFrom(R.string.average_temperature), item.main.temp));
-
-        //String url = new StringBuilder("https://openweathermap.org/img/w/01d.png").toString();
+        String temperature = String.valueOf(item.main.temp) + " °C";
         String url =
                 "https://openweathermap.org/img/w/" +
-                item.getWeather().get(0).icon +
-                ".png";
-
+                        item.getWeather().get(0).icon +
+                        ".png";
         Picasso.get().load(url).into(holder.image);
 
+        holder.city.setText(item.name);
+        holder.temperature.setText(temperature);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
