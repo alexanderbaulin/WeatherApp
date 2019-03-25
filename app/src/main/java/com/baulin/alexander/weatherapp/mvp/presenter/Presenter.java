@@ -37,9 +37,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
 
     public void setActivity(Main activity) {
         view = new WeakReference<View>(activity);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        App.getContext().registerReceiver(new NetworkChangeReceiver(), filter);
+        setNetworkChangeReceiver();
     }
 
     @Override
@@ -102,9 +100,17 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
         public void onReceive(Context context, Intent intent) {
             if(App.haveNetworkConnection())
                 view.get().setEmptyScreen(false);
-            else
+            else {
                 view.get().setEmptyScreen(true);
+                view.get().showMessage("No internet connection");
+            }
             //Toast.makeText(context, "network state changed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setNetworkChangeReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        App.getContext().registerReceiver(new NetworkChangeReceiver(), filter);
     }
 }

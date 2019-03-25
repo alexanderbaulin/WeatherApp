@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.R;
@@ -142,5 +143,10 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             fragment.getView().setVisibility(android.view.View.VISIBLE);
             recyclerView.setVisibility(android.view.View.VISIBLE);
         }
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
