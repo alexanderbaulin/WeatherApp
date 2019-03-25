@@ -5,9 +5,13 @@ import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.interfaces.View;
 import com.baulin.alexander.weatherapp.mvp.model.Data;
@@ -33,6 +37,9 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
 
     public void setActivity(Main activity) {
         view = new WeakReference<View>(activity);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        App.getContext().registerReceiver(new NetworkChangeReceiver(), filter);
     }
 
     @Override
@@ -93,7 +100,11 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
+            if(App.haveNetworkConnection())
+                view.get().setEmptyScreen(false);
+            else
+                view.get().setEmptyScreen(true);
+            //Toast.makeText(context, "network state changed", Toast.LENGTH_SHORT).show();
         }
     }
 }

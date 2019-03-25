@@ -52,11 +52,6 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         if (fragment != null) {
             fragment.getMapAsync(this);
-            if(App.haveNetworkConnection()) {
-                setEmptyScreen(false);
-            } else {
-                setEmptyScreen(true);
-            }
         }
 
         if (App.isGooglePlayServiceAvailable()) Log.d("myLogs", "ok");
@@ -136,7 +131,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         presenter.getCurrentCityWeather(cityName);
     }
 
-    private void setEmptyScreen(boolean setEmpty) {
+    @Override
+    public void setEmptyScreen(boolean setEmpty) {
         SupportMapFragment  fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if(fragment == null) return;
         if(setEmpty) {
