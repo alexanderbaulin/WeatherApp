@@ -104,12 +104,18 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     }
 
     @Override
+    protected void onDestroy() {
+        presenter.onDestroyActivity();
+        super.onDestroy();
+    }
+
+    @Override
     public void display(List<WeatherCityItem> list) {
-        Log.d("myLogs", "-------------------");
-        Log.d("myLogs", "size = " + list.size());
+        Log.d("display", "-------------------");
+        Log.d("display", "size = " + list.size());
         for(int i = 0; i < list.size(); i++) {
-            Log.d("myLogs", "city name = " + list.get(i).name);
-            Log.d("myLogs", "city id = " + list.get(i).id + " " + list.get(i).weather.get(0).id);
+            Log.d("display", "city name = " + list.get(i).name);
+            Log.d("display", "city id = " + list.get(i).id + " " + list.get(i).weather.get(0).id);
         }
         WeatherAdapter adapter = new WeatherAdapter();
         adapter.setData(list);

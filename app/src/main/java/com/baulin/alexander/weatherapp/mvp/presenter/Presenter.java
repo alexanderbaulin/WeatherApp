@@ -1,15 +1,12 @@
 package com.baulin.alexander.weatherapp.mvp.presenter;
 
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
@@ -31,19 +28,22 @@ import io.reactivex.schedulers.Schedulers;
 public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces.Presenter {
 
     Model data = new Data();
-    private CompositeDisposable compositeDisposable;
+    private CompositeDisposable citiesWeatherRequests;
+    private CompositeDisposable cityDetailWeatherRequests;
 
     private WeakReference<View> view;
 
     public void setActivity(Main activity) {
         view = new WeakReference<View>(activity);
         setNetworkChangeReceiver();
+        citiesWeatherRequests = new CompositeDisposable();
+        cityDetailWeatherRequests = new CompositeDisposable();
     }
 
     @Override
     public void getCurrentCityWeather(String cityName) {
-        compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(data.getCurrentCityWeather(cityName)
+        cityDetailWeatherRequests.clear();
+        cityDetailWeatherRequests.add(data.getCurrentCityWeather(cityName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RootWeatherCity>() {
@@ -55,19 +55,18 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                            }, new Consumer<Throwable>() {
                                @Override
                                public void accept(Throwable throwable) throws Exception {
+                                   Log.d("onClick", "error getCurrentCity " + throwable.getMessage());
 
                                }
                            }
-
                 )
-
         );
     }
 
     @Override
     public void getCitiesWeather(LatLngBounds latLngBounds, float zoom) {
-        compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(data.getCitiesWeather(latLngBounds, zoom)
+        citiesWeatherRequests.clear();
+        citiesWeatherRequests.add(data.getCitiesWeather(latLngBounds, zoom)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<RootWeatherCities>() {
@@ -94,8 +93,13 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
         data.stopDeviceLocationTracking();
     }
 
-    public class NetworkChangeReceiver extends BroadcastReceiver {
+    @Override
+    public void onDestroyActivity() {
+        citiesWeatherRequests.clear();
+        cityDetailWeatherRequests.clear();
+    }
 
+    public class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(App.haveNetworkConnection())

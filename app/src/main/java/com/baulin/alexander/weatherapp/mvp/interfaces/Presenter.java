@@ -13,4 +13,6 @@ public interface Presenter {
     void setActivity(Main activity);
 
     void getCurrentCityWeather(String cityName);
+
+    void onDestroyActivity();
 }
