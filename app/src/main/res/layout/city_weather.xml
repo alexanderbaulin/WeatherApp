@@ -9,14 +9,12 @@
     >
 
     <LinearLayout
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="8dp"
-        >
-
+        android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/txtCityName"
@@ -26,7 +24,6 @@
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
-
 
         <LinearLayout
             android:layout_width="wrap_content"

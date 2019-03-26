@@ -5,18 +5,15 @@
     android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="2dp"
-    android:layout_margin="8dp"
-    >
+    android:layout_margin="8dp">
 
     <LinearLayout
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="8dp"
-        >
-
+        android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/txtCityName"
@@ -26,9 +23,6 @@
             android:textColor="@color/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
-
-
-
 
             <ImageView
                 android:id="@+id/imgWeather"
@@ -42,8 +36,6 @@
                 android:text="15 C"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 />
-
-
 
     </LinearLayout>
 
