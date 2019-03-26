@@ -11,7 +11,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 
-public class DeviceLocation {
+class DeviceLocation {
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback;
 
@@ -29,5 +29,6 @@ public class DeviceLocation {
 
     void removeLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        mLocationCallback = null;
     }
 }

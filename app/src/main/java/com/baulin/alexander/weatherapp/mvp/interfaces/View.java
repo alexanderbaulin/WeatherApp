@@ -9,5 +9,5 @@ public interface View {
     void display(List<WeatherCityItem> list);
     void display(RootWeatherCity rootWeatherCity);
     void setEmptyScreen(boolean setEmpty);
-    void showMessage(String no_internet_connection);
+    void showMessage(String message);
 }

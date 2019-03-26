@@ -104,7 +104,6 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                 view.get().setEmptyScreen(true);
                 view.get().showMessage("No internet connection");
             }
-            //Toast.makeText(context, "network state changed", Toast.LENGTH_SHORT).show();
         }
     }
 

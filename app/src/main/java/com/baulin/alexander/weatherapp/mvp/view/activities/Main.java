@@ -2,7 +2,9 @@ package com.baulin.alexander.weatherapp.mvp.view.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,8 +38,6 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
     Presenter presenter;
     GoogleMap map;
-
-    private Location location;
     RecyclerView recyclerView;
 
 
@@ -55,27 +55,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             fragment.getMapAsync(this);
         }
 
-        if (App.isGooglePlayServiceAvailable()) Log.d("myLogs", "ok");
-        else Log.d("myLogs", "not ok");
-
-        if(App.isFineLocationPermissionGranted())
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-        if(App.isCoarseLocationPermissionGranted())
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
-
-        LocationCallback mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-
-                location = locationResult.getLastLocation();
-                presenter.stopDeviceLocationTracking();
-                LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraUpdate position = CameraUpdateFactory.newLatLngZoom(coordinates , 12);
-                map.moveCamera(position);
-            }
-        };
+        LocationCallback mLocationCallback = createCallback();
 
         presenter = new Presenter();
         presenter.getDeviceLocation(mLocationCallback);
@@ -99,7 +79,28 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             }
 
         });
-        map.setMyLocationEnabled(true);
+
+        if(!App.isFineLocationPermissionGranted()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else
+            map.setMyLocationEnabled(true);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    map.setMyLocationEnabled(true);
+                    LocationCallback mLocationCallback = createCallback();
+                    presenter.getDeviceLocation(mLocationCallback);
+                    Log.d("permission", "granted");
+                } else {
+                    map.setMyLocationEnabled(false);
+                    Log.d("permission", "denied");
+                }
+            }
+        }
     }
 
     @Override
@@ -109,10 +110,6 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         for(int i = 0; i < list.size(); i++) {
             Log.d("myLogs", "city name = " + list.get(i).name);
             Log.d("myLogs", "city id = " + list.get(i).id + " " + list.get(i).weather.get(0).id);
-            //Log.d("myLogs", " " + list.get(i).weather.get(0).icon);
-            //Log.d("myLogs", "city name = " + list.get(i).wind.deg);
-            //Log.d("myLogs", "weaterCityItemExt size = " + list.get(0).id);
-
         }
         WeatherAdapter adapter = new WeatherAdapter();
         adapter.setData(list);
@@ -148,5 +145,20 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private LocationCallback createCallback() {
+        return new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+
+                Location location = locationResult.getLastLocation();
+                presenter.stopDeviceLocationTracking();
+                LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
+                CameraUpdate position = CameraUpdateFactory.newLatLngZoom(coordinates , 12);
+                map.moveCamera(position);
+            }
+        };
     }
 }
