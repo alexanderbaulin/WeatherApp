@@ -55,8 +55,8 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                            }, new Consumer<Throwable>() {
                                @Override
                                public void accept(Throwable throwable) throws Exception {
-                                   Log.d("onClick", "error getCurrentCity " + throwable.getMessage());
-
+                                   view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");
+                                   //Log.d("onClick", "error getCurrentCity " + throwable.getMessage());
                                }
                            }
                 )
@@ -72,12 +72,16 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                 .subscribe(new Consumer<RootWeatherCities>() {
                     @Override
                     public void accept(RootWeatherCities rootWeatherObject) throws Exception {
+                        view.get().hideCitiesSheet(false);
                         view.get().display(rootWeatherObject.list);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.d("myLogs", "Error: " + throwable.getMessage() + ". Check Internet connection");
+                        if(throwable.getMessage().contains("java.lang.IllegalStateException"))
+                            view.get().hideCitiesSheet(true);
+                        else
+                            view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");
                     }
                 })
         );

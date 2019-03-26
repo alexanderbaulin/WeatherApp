@@ -9,5 +9,6 @@ public interface View {
     void display(List<WeatherCityItem> list);
     void display(RootWeatherCity rootWeatherCity);
     void setEmptyScreen(boolean setEmpty);
+    void hideCitiesSheet(boolean isHidden);
     void showMessage(String message);
 }

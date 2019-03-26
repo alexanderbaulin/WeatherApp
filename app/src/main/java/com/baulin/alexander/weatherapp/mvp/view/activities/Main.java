@@ -35,7 +35,6 @@ import java.util.List;
 
 public class Main extends AppCompatActivity implements OnMapReadyCallback, View, WeatherAdapter.OnItemClickListener {
 
-
     Presenter presenter;
     GoogleMap map;
     RecyclerView recyclerView;
@@ -148,6 +147,14 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             fragment.getView().setVisibility(android.view.View.VISIBLE);
             recyclerView.setVisibility(android.view.View.VISIBLE);
         }
+    }
+
+    @Override
+    public void hideCitiesSheet(boolean isHidden) {
+        if(isHidden)
+            recyclerView.setVisibility(android.view.View.GONE);
+        else
+            recyclerView.setVisibility(android.view.View.VISIBLE);
     }
 
     @Override
