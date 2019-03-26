@@ -29,12 +29,12 @@ public class Data implements Model {
                 String.valueOf(lat_top) + "," +
                 String.valueOf((int) zoom);
 
-        return client.getCitiesWeatherFromJSON(request, RetrofitClient.API_key);
+        return client.getCitiesWeatherFromJSON(request, "metric", RetrofitClient.API_key);
     }
 
     @Override
     public Observable<RootWeatherCity> getCurrentCityWeather(String cityName) {
-        return client.getCityWeatherFromJSON(cityName, RetrofitClient.API_key);
+        return client.getCityWeatherFromJSON(cityName, "metric", RetrofitClient.API_key);
     }
 
     @Override

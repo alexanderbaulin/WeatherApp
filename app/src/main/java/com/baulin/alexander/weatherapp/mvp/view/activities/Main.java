@@ -126,7 +126,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
     @Override
     public void display(RootWeatherCity rootWeatherCity) {
-        Log.d("click", "display " + rootWeatherCity.name);
+        Log.d("onClick", "display " + rootWeatherCity.name + " t = " + rootWeatherCity.main.temp);
 
     }
 
