@@ -55,11 +55,13 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             fragment.getMapAsync(this);
         }
 
-        LocationCallback mLocationCallback = createCallback();
-
         presenter = new Presenter();
-        presenter.getDeviceLocation(mLocationCallback);
         presenter.setActivity(this);
+
+        if(savedInstanceState == null) {
+            LocationCallback mLocationCallback = createCallback();
+            presenter.getDeviceLocation(mLocationCallback);
+        }
     }
 
     @SuppressLint("MissingPermission")

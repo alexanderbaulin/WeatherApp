@@ -8,10 +8,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import io.reactivex.Observable;
 
 public interface Model {
-
     Observable<RootWeatherCities> getCitiesWeather(LatLngBounds bounds, float zoom);
     Observable<RootWeatherCity> getCurrentCityWeather(String cityName);
     void getDeviceLocation(LocationCallback locationCallback);
     void stopDeviceLocationTracking();
-
 }

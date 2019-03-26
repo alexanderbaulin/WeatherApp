@@ -8,11 +8,9 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 public interface Presenter {
     void getCitiesWeather(LatLngBounds bounds, float zoom);
+    void getCurrentCityWeather(String cityName);
     void getDeviceLocation(LocationCallback locationCallback);
     void stopDeviceLocationTracking();
     void setActivity(Main activity);
-
-    void getCurrentCityWeather(String cityName);
-
     void onDestroyActivity();
 }
