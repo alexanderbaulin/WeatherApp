@@ -9,6 +9,10 @@ import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
 
 public class App extends Application {
+
+    public static final int REQUEST_CODE_FINE_LOCATION = 1;
+    public static final int DEFAULT_ZOOM = 12;
+
     private static App instance;
     private static ConnectivityManager cm;
 

@@ -82,7 +82,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         });
 
         if(!App.isFineLocationPermissionGranted()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, App.REQUEST_CODE_FINE_LOCATION);
         } else
             map.setMyLocationEnabled(true);
     }
@@ -90,7 +90,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case 1: {
+            case App.REQUEST_CODE_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     map.setMyLocationEnabled(true);
                     LocationCallback mLocationCallback = createCallback();
@@ -139,7 +139,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     @Override
     public void setEmptyScreen(boolean setEmpty) {
         SupportMapFragment  fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        if(fragment == null) return;
+        if(fragment == null || fragment.getView() == null) return;
         if(setEmpty) {
             fragment.getView().setVisibility(android.view.View.INVISIBLE);
             recyclerView.setVisibility(android.view.View.INVISIBLE);
@@ -150,8 +150,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     }
 
     @Override
-    public void hideCitiesSheet(boolean isHidden) {
-        if(isHidden)
+    public void hideCitiesSheet(boolean setHidden) {
+        if(setHidden)
             recyclerView.setVisibility(android.view.View.GONE);
         else
             recyclerView.setVisibility(android.view.View.VISIBLE);
@@ -171,7 +171,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
                 Location location = locationResult.getLastLocation();
                 presenter.stopDeviceLocationTracking();
                 LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraUpdate position = CameraUpdateFactory.newLatLngZoom(coordinates , 12);
+                CameraUpdate position = CameraUpdateFactory.newLatLngZoom(coordinates , App.DEFAULT_ZOOM);
                 map.moveCamera(position);
             }
         };
