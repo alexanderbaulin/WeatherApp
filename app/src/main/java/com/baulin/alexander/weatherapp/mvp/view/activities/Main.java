@@ -16,10 +16,14 @@ import android.widget.Toast;
 
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.R;
+
+import com.baulin.alexander.weatherapp.dagger2.components.DaggerMainActivityComponent;
+import com.baulin.alexander.weatherapp.dagger2.components.MainActivityComponent;
+import com.baulin.alexander.weatherapp.mvp.interfaces.Presenter;
 import com.baulin.alexander.weatherapp.mvp.interfaces.View;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.WeatherCityItem;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
-import com.baulin.alexander.weatherapp.mvp.presenter.Presenter;
+
 import com.baulin.alexander.weatherapp.mvp.view.adapter.WeatherAdapter;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
@@ -33,12 +37,15 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class Main extends AppCompatActivity implements OnMapReadyCallback, View, WeatherAdapter.OnItemClickListener {
 
+    @Inject
     Presenter presenter;
     GoogleMap map;
     @BindView(R.id.recView)
@@ -52,6 +59,12 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         ButterKnife.bind(this);
 
+        MainActivityComponent component = DaggerMainActivityComponent.builder()
+                .appComponent(App.getComponent())
+                .build();
+
+        component.injectMainActivity(this);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         SupportMapFragment  fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -60,7 +73,6 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             fragment.getMapAsync(this);
         }
 
-        presenter = new Presenter();
         presenter.setActivity(this);
 
         if(savedInstanceState == null) {

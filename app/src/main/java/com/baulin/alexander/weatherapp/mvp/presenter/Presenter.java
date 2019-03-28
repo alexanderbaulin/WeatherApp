@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.baulin.alexander.weatherapp.App;
+import com.baulin.alexander.weatherapp.dagger2.components.AppComponent;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.interfaces.View;
 import com.baulin.alexander.weatherapp.mvp.model.Data;
@@ -20,6 +21,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.lang.ref.WeakReference;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -27,11 +30,17 @@ import io.reactivex.schedulers.Schedulers;
 
 public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces.Presenter {
 
-    Model data = new Data();
+    @Inject
+    Model data;
     private CompositeDisposable citiesWeatherRequests;
     private CompositeDisposable cityDetailWeatherRequests;
 
     private WeakReference<View> view;
+
+    public Presenter() {
+        AppComponent component = App.getComponent();
+        if(component != null) component.injectPresenter(this);
+    }
 
     public void setActivity(Main activity) {
         view = new WeakReference<View>(activity);

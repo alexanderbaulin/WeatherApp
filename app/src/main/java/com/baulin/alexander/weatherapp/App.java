@@ -8,6 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
 
+import com.baulin.alexander.weatherapp.dagger2.components.AppComponent;
+import com.baulin.alexander.weatherapp.dagger2.components.DaggerAppComponent;
+import com.baulin.alexander.weatherapp.dagger2.modules.AppModule;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Main;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Sys;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Weather;
@@ -30,6 +33,8 @@ public class App extends Application {
     private static App instance;
     private static ConnectivityManager cm;
 
+    private static AppComponent component;
+
     public static boolean isFineLocationPermissionGranted() {
         int permission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
         return permission == PackageManager.PERMISSION_GRANTED;
@@ -51,6 +56,14 @@ public class App extends Application {
         instance = this;
 
         cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        component = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .build();
+    }
+
+    public static AppComponent getComponent() {
+        return component;
     }
 
     public static boolean haveNetworkConnection() {
