@@ -17,7 +17,35 @@ import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Weather;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Wind;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailCityWeather extends AppCompatActivity {
+
+    @BindView(R.id.imgDetailCityWeather)
+    ImageView image;
+    @BindView(R.id.txtCityName)
+    TextView txtCityName;
+    @BindView(R.id.txtHumidity)
+    TextView txtHumidity;
+    @BindView(R.id.txtSunrise)
+    TextView txtSunrise;
+    @BindView(R.id.txtSunset)
+    TextView txtSunset;
+    @BindView(R.id.txtPressure)
+    TextView txtPressure;
+    @BindView(R.id.txtWind)
+    TextView txtWind;
+    @BindView(R.id.txtTemperature)
+    TextView txtTemperature;
+    @BindView(R.id.txtMinTemperature)
+    TextView txtMinTemperature;
+    @BindView(R.id.txtMaxTemperature)
+    TextView txtMaxTemperature;
+    @BindView(R.id.txtDescription)
+    TextView txtDescription;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +53,7 @@ public class DetailCityWeather extends AppCompatActivity {
 
         setContentView(R.layout.activity_current);
 
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
 
@@ -33,32 +62,6 @@ public class DetailCityWeather extends AppCompatActivity {
         Sys sys = intent.getParcelableExtra(App.NAME_SYS_CLASS);
         Weather weather = intent.getParcelableExtra(App.NAME_WEATHER_CLASS);
         Wind wind = intent.getParcelableExtra(App.NAME_WIND_CLASS);
-
-        ImageView image;
-        TextView txtCityName,
-                 txtHumidity,
-                 txtSunrise,
-                 txtSunset,
-                 txtPressure,
-                 txtWind,
-                 txtTemperature,
-                 txtMinTemperature,
-                 txtMaxTemperature,
-                 txtDescription;
-
-        image = findViewById(R.id.imgDetailCityWeather);
-
-        txtCityName = findViewById(R.id.txtCityName);
-        txtHumidity = findViewById(R.id.txtHumidity);
-        txtSunrise = findViewById(R.id.txtSunrise);
-        txtSunset = findViewById(R.id.txtSunset);
-        txtPressure = findViewById(R.id.txtPressure);
-        txtWind = findViewById(R.id.txtWind);
-        txtTemperature = findViewById(R.id.txtTemperature);
-        txtMinTemperature = findViewById(R.id.txtMinTemperature);
-        txtMaxTemperature = findViewById(R.id.txtMaxTemperature);
-        txtDescription = findViewById(R.id.txtDescription);
-
 
         String url =
                 "https://openweathermap.org/img/w/" +
@@ -76,7 +79,6 @@ public class DetailCityWeather extends AppCompatActivity {
         String sunrise = App.convertUnixToHour(sys.sunrise);
         String sunset = App.convertUnixToHour(sys.sunset);
 
-
         txtDescription.setText(description);
         txtCityName.setText(name);
         txtTemperature.setText(temperature);
@@ -87,7 +89,5 @@ public class DetailCityWeather extends AppCompatActivity {
         txtPressure.setText(pressure);
         txtSunrise.setText(sunrise);
         txtSunset.setText(sunset);
-        
     }
-
 }

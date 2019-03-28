@@ -17,6 +17,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder> {
 
     private List<WeatherCityItem> cities;
@@ -71,14 +74,17 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
 
     class WeatherViewHolder extends RecyclerView.ViewHolder {
 
-        TextView city, temperature;
+        @BindView(R.id.txtCityName)
+        TextView city;
+        @BindView(R.id.txtTemperature)
+        TextView temperature;
+        @BindView(R.id.imgWeather)
         ImageView image;
 
         WeatherViewHolder(@NonNull View itemView) {
             super(itemView);
-            city = itemView.findViewById(R.id.txtCityName);
-            image = itemView.findViewById(R.id.imgWeather);
-            temperature = itemView.findViewById(R.id.txtTemperature);
+
+            ButterKnife.bind(this, itemView);
         }
     }
 }

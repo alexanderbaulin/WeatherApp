@@ -33,11 +33,15 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class Main extends AppCompatActivity implements OnMapReadyCallback, View, WeatherAdapter.OnItemClickListener {
 
     Presenter presenter;
     GoogleMap map;
+    @BindView(R.id.recView)
     RecyclerView recyclerView;
 
 
@@ -46,7 +50,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recView);
+        ButterKnife.bind(this);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         SupportMapFragment  fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -82,12 +87,13 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         });
 
-        if(!App.isFineLocationPermissionGranted()) {
+        if (!App.isFineLocationPermissionGranted()) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, App.REQUEST_CODE_FINE_LOCATION);
         } else
             map.setMyLocationEnabled(true);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {

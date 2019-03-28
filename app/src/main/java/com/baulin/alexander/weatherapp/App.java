@@ -39,8 +39,8 @@ public class App extends Application {
         return instance.getApplicationContext();
     }
 
-    public static String convertUnixToHour(int sunrise) {
-        Date date = new Date(sunrise * 1000L);
+    public static String convertUnixToHour(int unites) {
+        Date date = new Date(unites * 1000L);
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         return sdf.format(date);
     }
