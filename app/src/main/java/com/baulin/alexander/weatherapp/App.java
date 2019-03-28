@@ -8,10 +8,24 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.content.ContextCompat;
 
+import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Main;
+import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Sys;
+import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Weather;
+import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Wind;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class App extends Application {
 
     public static final int REQUEST_CODE_FINE_LOCATION = 1;
     public static final int DEFAULT_ZOOM = 12;
+
+    public static final String NAME_MAIN_CLASS = Main.class.getCanonicalName();
+    public static final String NAME_SYS_CLASS = Sys.class.getCanonicalName();
+    public static final String NAME_WEATHER_CLASS = Weather.class.getCanonicalName();
+    public static final String NAME_WIND_CLASS = Wind.class.getCanonicalName();
+    public static final String CITY_NAME = "cityName";
 
     private static App instance;
     private static ConnectivityManager cm;
@@ -23,6 +37,12 @@ public class App extends Application {
 
     public static Context getContext() {
         return instance.getApplicationContext();
+    }
+
+    public static String convertUnixToHour(int sunrise) {
+        Date date = new Date(sunrise * 1000L);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(date);
     }
 
     @Override

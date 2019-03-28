@@ -27,13 +27,20 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".mvp.view.activities.Main">
+        <activity
+            android:name=".mvp.view.activities.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".mvp.view.activities.DetailCityWeather"
+            android:parentActivityName=".mvp.view.activities.Main"
+            />
+
     </application>
 
 </manifest>

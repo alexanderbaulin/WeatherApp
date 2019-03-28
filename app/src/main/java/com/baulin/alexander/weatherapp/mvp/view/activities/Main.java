@@ -2,6 +2,7 @@ package com.baulin.alexander.weatherapp.mvp.view.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -127,6 +128,16 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     @Override
     public void display(RootWeatherCity rootWeatherCity) {
         Log.d("onClick", "display " + rootWeatherCity.name + " t = " + rootWeatherCity.main.temp);
+
+        Intent intent = new Intent(this, DetailCityWeather.class);
+
+        intent.putExtra(App.CITY_NAME, rootWeatherCity.name);
+        intent.putExtra(App.NAME_MAIN_CLASS, rootWeatherCity.main);
+        intent.putExtra(App.NAME_SYS_CLASS, rootWeatherCity.sys);
+        intent.putExtra(App.NAME_WEATHER_CLASS, rootWeatherCity.weather.get(0));
+        intent.putExtra(App.NAME_WIND_CLASS, rootWeatherCity.wind);
+
+        startActivity(intent);
 
     }
 

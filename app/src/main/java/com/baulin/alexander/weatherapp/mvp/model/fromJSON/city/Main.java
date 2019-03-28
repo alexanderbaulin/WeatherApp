@@ -1,11 +1,34 @@
 package com.baulin.alexander.weatherapp.mvp.model.fromJSON.city;
 
-public class Main {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Main implements Parcelable {
     public double temp;
-    public int pressure;
+    public double pressure;//////////
     public int humidity;
     public double temp_min;
     public double temp_max;
+
+    protected Main(Parcel in) {
+        temp = in.readDouble();
+        pressure = in.readDouble();  //////////
+        humidity = in.readInt();
+        temp_min = in.readDouble();
+        temp_max = in.readDouble();
+    }
+
+    public static final Creator<Main> CREATOR = new Creator<Main>() {
+        @Override
+        public Main createFromParcel(Parcel in) {
+            return new Main(in);
+        }
+
+        @Override
+        public Main[] newArray(int size) {
+            return new Main[size];
+        }
+    };
 
     public double getTemp() {
         return temp;
@@ -15,9 +38,9 @@ public class Main {
         this.temp = temp;
     }
 
-    public int getPressure() {
+    public double getPressure() {
         return pressure;
-    }
+    }  /////////////
 
     public void setPressure(int pressure) {
         this.pressure = pressure;
@@ -45,5 +68,19 @@ public class Main {
 
     public void setTemp_max(double temp_max) {
         this.temp_max = temp_max;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(temp);
+        dest.writeDouble(pressure);   /////////////
+        dest.writeInt(humidity);
+        dest.writeDouble(temp_min);
+        dest.writeDouble(temp_max);
     }
 }
