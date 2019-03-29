@@ -5,12 +5,12 @@ import android.os.Parcelable;
 
 public class Wind implements Parcelable {
 
-    public double speed; ///////////
-    public int deg;
+    public double speed;
+    public double deg; /////////
 
     protected Wind(Parcel in) {
-        speed = in.readDouble();  /////
-        deg = in.readInt();
+        speed = in.readDouble();
+        deg = in.readDouble(); ////////////
     }
 
     public static final Creator<Wind> CREATOR = new Creator<Wind>() {
@@ -27,15 +27,15 @@ public class Wind implements Parcelable {
 
     public double getSpeed() {
         return speed;
-    } /////
+    }
 
     public void setSpeed(int speed) {
         this.speed = speed;
     }
 
-    public int getDeg() {
+    public double getDeg() {
         return deg;
-    }
+    } ////////////
 
     public void setDeg(int deg) {
         this.deg = deg;
@@ -48,7 +48,7 @@ public class Wind implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(speed);  ////
-        dest.writeInt(deg);
+        dest.writeDouble(speed);
+        dest.writeDouble(deg);  /////////////
     }
 }
