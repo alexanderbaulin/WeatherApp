@@ -115,6 +115,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
     public class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if(view.get() == null) return;
             if(App.haveNetworkConnection())
                 view.get().setEmptyScreen(false);
             else {
