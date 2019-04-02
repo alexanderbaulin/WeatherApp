@@ -15,9 +15,15 @@ import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Main;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Sys;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Weather;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Wind;
+import com.baulin.alexander.weatherapp.mvp.model.retrofit.AutoValueGsonFactory;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapterFactory;
+import com.ryanharter.auto.value.gson.GsonTypeAdapterFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
 
@@ -60,6 +66,13 @@ public class App extends Application {
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
+
+
+        new GsonBuilder()
+                .registerTypeAdapterFactory(AutoValueGsonFactory.create())
+                .create();
+
+
     }
 
     public static AppComponent getComponent() {

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.icu.text.LocaleDisplayNames;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
@@ -89,8 +90,10 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                     public void accept(Throwable throwable) throws Exception {
                         if(throwable.getMessage().contains("java.lang.IllegalStateException"))
                             view.get().hideCitiesSheet(true);
-                        else
+                        else {
                             view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");
+                            Log.d("autovalue", "Error: " + throwable.getMessage());
+                        }
                     }
                 })
         );
