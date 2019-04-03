@@ -58,8 +58,6 @@ dependencies {
     annotationProcessor 'com.ryanharter.auto.value:auto-value-gson:1.0.0'
     implementation 'com.ryanharter.auto.value:auto-value-gson-runtime:1.0.0'
 
-    implementation 'com.google.code.gson:gson:2.8.5'
-
     annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.6'
 // Optionally for TypeAdapter support
     api 'com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.6'

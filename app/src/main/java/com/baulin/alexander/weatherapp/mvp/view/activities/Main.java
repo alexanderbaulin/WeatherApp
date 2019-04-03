@@ -134,8 +134,9 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         Log.d("display", "-------------------");
         Log.d("display", "size = " + list.size());
         for(int i = 0; i < list.size(); i++) {
-            Log.d("display", "city name = " + list.get(i).name);
-            Log.d("display", "city id = " + list.get(i).id + " " + list.get(i).weather.get(0).id);
+            Log.d("display", "city name = " + list.get(i).name());
+            Log.d("display", "clouds = " + list.get(i).clouds().all());
+            Log.d("display", "city id = " + list.get(i).id() + " " + list.get(i).weather().get(0).id());
         }
         WeatherAdapter adapter = new WeatherAdapter();
         adapter.setData(list);
@@ -145,15 +146,15 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
     @Override
     public void display(RootWeatherCity rootWeatherCity) {
-        Log.d("onClick", "display " + rootWeatherCity.name + " t = " + rootWeatherCity.main.temp);
+        Log.d("onClick", "display " + rootWeatherCity.name() + " t = " + rootWeatherCity.main().temp());
 
         Intent intent = new Intent(this, DetailCityWeather.class);
 
-        intent.putExtra(App.CITY_NAME, rootWeatherCity.name);
-        intent.putExtra(App.NAME_MAIN_CLASS, rootWeatherCity.main);
-        intent.putExtra(App.NAME_SYS_CLASS, rootWeatherCity.sys);
-        intent.putExtra(App.NAME_WEATHER_CLASS, rootWeatherCity.weather.get(0));
-        intent.putExtra(App.NAME_WIND_CLASS, rootWeatherCity.wind);
+        intent.putExtra(App.CITY_NAME, rootWeatherCity.name());
+        intent.putExtra(App.NAME_MAIN_CLASS, rootWeatherCity.main());
+        intent.putExtra(App.NAME_SYS_CLASS, rootWeatherCity.sys());
+        intent.putExtra(App.NAME_WEATHER_CLASS, rootWeatherCity.weather().get(0));
+        intent.putExtra(App.NAME_WIND_CLASS, rootWeatherCity.wind());
 
         startActivity(intent);
 

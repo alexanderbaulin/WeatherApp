@@ -1,23 +1,17 @@
 package com.baulin.alexander.weatherapp.mvp.model.fromJSON.city;
 
-public class Coord {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
-    public double lon;
-    public double lat;
+@AutoValue
+public abstract class Coord {
 
-    public double getLon() {
-        return lon;
+    public abstract double lon();
+    public abstract double lat();
+
+    public static TypeAdapter<Coord> typeAdapter(Gson gson) {
+        return new AutoValue_Coord.GsonTypeAdapter(gson);
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
 }

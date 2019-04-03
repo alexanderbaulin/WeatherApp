@@ -59,7 +59,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                 .subscribe(new Consumer<RootWeatherCity>() {
                                @Override
                                public void accept(RootWeatherCity rootWeatherCity) throws Exception {
-                                   Log.d("onClick", "getCurrentCity " + rootWeatherCity.name);
+                                   Log.d("onClick", "getCurrentCity " + rootWeatherCity.name());
                                    view.get().display(rootWeatherCity);
                                }
                            }, new Consumer<Throwable>() {
@@ -83,12 +83,12 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                     @Override
                     public void accept(RootWeatherCities rootWeatherObject) throws Exception {
                         view.get().hideCitiesSheet(false);
-                        view.get().display(rootWeatherObject.list);
+                        view.get().display(rootWeatherObject.list());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        if(throwable.getMessage().contains("java.lang.IllegalStateException"))
+                        if(throwable.getMessage().contains("Expected BEGIN_OBJECT"))
                             view.get().hideCitiesSheet(true);
                         else {
                             view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");

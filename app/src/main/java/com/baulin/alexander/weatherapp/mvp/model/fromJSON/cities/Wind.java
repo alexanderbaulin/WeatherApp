@@ -1,23 +1,18 @@
 package com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities;
 
-public class Wind {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
-    public double speed;
-    public double deg;
+@AutoValue
+public abstract class Wind {
 
-    public double getSpeed() {
-        return speed;
+    public abstract double speed();
+    public abstract double deg();
+
+    public static TypeAdapter<Wind> typeAdapter(Gson gson) {
+        return new AutoValue_Wind.GsonTypeAdapter(gson);
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
 
-    public double getDeg() {
-        return deg;
-    }
-
-    public void setDeg(double deg) {
-        this.deg = deg;
-    }
 }

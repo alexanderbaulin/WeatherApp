@@ -3,52 +3,18 @@ package com.baulin.alexander.weatherapp.mvp.model.fromJSON.city;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Wind implements Parcelable {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
-    public double speed;
-    public double deg; /////////
+@AutoValue
+public abstract class Wind implements Parcelable {
 
-    protected Wind(Parcel in) {
-        speed = in.readDouble();
-        deg = in.readDouble(); ////////////
+    public abstract double speed();
+    public abstract double deg();
+
+    public static TypeAdapter<Wind> typeAdapter(Gson gson) {
+        return new AutoValue_Wind.GsonTypeAdapter(gson);
     }
 
-    public static final Creator<Wind> CREATOR = new Creator<Wind>() {
-        @Override
-        public Wind createFromParcel(Parcel in) {
-            return new Wind(in);
-        }
-
-        @Override
-        public Wind[] newArray(int size) {
-            return new Wind[size];
-        }
-    };
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public double getDeg() {
-        return deg;
-    } ////////////
-
-    public void setDeg(int deg) {
-        this.deg = deg;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(speed);
-        dest.writeDouble(deg);  /////////////
-    }
 }

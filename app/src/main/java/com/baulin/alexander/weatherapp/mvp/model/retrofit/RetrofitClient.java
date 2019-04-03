@@ -1,5 +1,7 @@
 package com.baulin.alexander.weatherapp.mvp.model.retrofit;
 
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,9 +11,16 @@ public class RetrofitClient {
     private static Retrofit instance;
 
     public static Retrofit getInstance() {
+
+        GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(
+                new GsonBuilder()
+                        .registerTypeAdapterFactory(AutoValueGsonFactory.create())
+                        .create()
+        );
+
         if(instance == null) instance = new Retrofit.Builder()
                 .baseUrl("http://api.openweathermap.org/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return instance;

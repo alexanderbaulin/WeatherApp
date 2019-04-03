@@ -1,43 +1,22 @@
 package com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities;
 
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+
 import java.util.List;
 
-public class RootWeatherCities {
+@AutoValue
+public abstract class RootWeatherCities {
 
-    public int cod;
-    public double calctime;
-    public int cnt;
-    public List<WeatherCityItem> list;
+    public abstract int cod();
+    public abstract double calctime();
+    public abstract int cnt();
+    public abstract List<WeatherCityItem> list();
 
-    public int getCod() {
-        return cod;
+    public static TypeAdapter<RootWeatherCities> typeAdapter(Gson gson) {
+        return new AutoValue_RootWeatherCities.GsonTypeAdapter(gson);
     }
 
-    public void setCod(int cod) {
-        this.cod = cod;
-    }
 
-    public double getCalctime() {
-        return calctime;
-    }
-
-    public void setCalctime(double calctime) {
-        this.calctime = calctime;
-    }
-
-    public int getCnt() {
-        return cnt;
-    }
-
-    public void setCnt(int cnt) {
-        this.cnt = cnt;
-    }
-
-    public List<WeatherCityItem> getList() {
-        return list;
-    }
-
-    public void setList(List<WeatherCityItem> list) {
-        this.list = list;
-    }
 }

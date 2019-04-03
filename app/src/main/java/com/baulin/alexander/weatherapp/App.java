@@ -66,13 +66,6 @@ public class App extends Application {
         component = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
-
-
-        new GsonBuilder()
-                .registerTypeAdapterFactory(AutoValueGsonFactory.create())
-                .create();
-
-
     }
 
     public static AppComponent getComponent() {

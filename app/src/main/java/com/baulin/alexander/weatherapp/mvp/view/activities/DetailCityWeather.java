@@ -65,19 +65,19 @@ public class DetailCityWeather extends AppCompatActivity {
 
         String url =
                 "https://openweathermap.org/img/w/" +
-                        weather.icon +
+                        weather.icon() +
                         ".png";
         Picasso.get().load(url).into(image);
 
-        String temperature = String.valueOf(main.temp) + " °C";
-        String minTemperature = String.valueOf(main.temp_min) + " °C";
-        String maxTemperature = String.valueOf(main.temp_max) + " °C";
-        String fieldWind = "Speed: " + String.valueOf(wind.speed) + " m/s  Deg: " + String.valueOf(wind.deg);
-        String humidity = String.valueOf(main.humidity) + "%";
-        String description = weather.description;
-        String pressure = String.valueOf(main.pressure) + " hpa";
-        String sunrise = App.convertUnixToHour(sys.sunrise);
-        String sunset = App.convertUnixToHour(sys.sunset);
+        String temperature = String.valueOf(main.temp()) + " °C";
+        String minTemperature = String.valueOf(main.temp_min()) + " °C";
+        String maxTemperature = String.valueOf(main.temp_max()) + " °C";
+        String fieldWind = "Speed: " + String.valueOf(wind.speed()) + " m/s  Deg: " + String.valueOf(wind.deg());
+        String humidity = String.valueOf(main.humidity()) + "%";
+        String description = weather.description();
+        String pressure = String.valueOf(main.pressure()) + " hpa";
+        String sunrise = App.convertUnixToHour(sys.sunrise());
+        String sunset = App.convertUnixToHour(sys.sunset());
 
         txtDescription.setText(description);
         txtCityName.setText(name);

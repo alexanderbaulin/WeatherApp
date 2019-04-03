@@ -1,41 +1,20 @@
 package com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities;
 
-public class WeatherCityItemExtend {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 
-    public int id;
-    public String main;
-    public String description;
-    public String icon;
+@AutoValue
+public abstract class WeatherCityItemExtend {
 
-    public int getId() {
-        return id;
+    public abstract int id();
+    public abstract String main();
+    public abstract String description();
+    public abstract String icon();
+
+    public static TypeAdapter<WeatherCityItemExtend> typeAdapter(Gson gson) {
+        return new AutoValue_WeatherCityItemExtend.GsonTypeAdapter(gson);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public String getMain() {
-        return main;
-    }
-
-    public void setMain(String main) {
-        this.main = main;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
 }
