@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -99,10 +100,11 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         });
 
-        if (!App.isFineLocationPermissionGranted()) {
+        if (isFineLocationPermissionGranted()) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, App.REQUEST_CODE_FINE_LOCATION);
         } else
             map.setMyLocationEnabled(true);
+
     }
 
     @SuppressLint("MissingPermission")
@@ -205,5 +207,10 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
                 map.moveCamera(position);
             }
         };
+    }
+
+    public boolean isFineLocationPermissionGranted() {
+        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        return permission == PackageManager.PERMISSION_GRANTED;
     }
 }

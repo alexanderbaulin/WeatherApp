@@ -41,11 +41,6 @@ public class App extends Application {
 
     private static AppComponent component;
 
-    public static boolean isFineLocationPermissionGranted() {
-        int permission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-        return permission == PackageManager.PERMISSION_GRANTED;
-    }
-
     public static Context getContext() {
         return instance.getApplicationContext();
     }
