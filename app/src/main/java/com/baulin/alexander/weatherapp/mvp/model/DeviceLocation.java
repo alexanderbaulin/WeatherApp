@@ -11,23 +11,23 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 
-class DeviceLocation {
+public class DeviceLocation {
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationCallback mLocationCallback;
 
-    DeviceLocation() {
+    public DeviceLocation() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(App.getContext());
     }
 
     @SuppressLint("MissingPermission")
-    void setLocationCallback(LocationCallback locationCallback) {
+    public void setLocationCallback(LocationCallback locationCallback) {
         mLocationCallback = locationCallback;
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
 
-    void removeLocationUpdates() {
+    public void removeLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         mLocationCallback = null;
     }

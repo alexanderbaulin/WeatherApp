@@ -34,9 +34,8 @@ public class ViewTest {
     @Mock
     private GoogleMap map;
 
-
-
-    private @InjectMocks Main activity;
+    @InjectMocks
+    private Main activity;
 
     @Test
     public void testOnItemClick() {

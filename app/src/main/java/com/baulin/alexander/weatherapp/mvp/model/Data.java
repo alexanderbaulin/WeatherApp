@@ -1,5 +1,8 @@
 package com.baulin.alexander.weatherapp.mvp.model;
 
+import com.baulin.alexander.weatherapp.App;
+import com.baulin.alexander.weatherapp.dagger2.components.AppComponent;
+import com.baulin.alexander.weatherapp.dagger2.modules.AppModule;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.RootWeatherCities;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
@@ -8,11 +11,22 @@ import com.baulin.alexander.weatherapp.mvp.model.retrofit.RetrofitClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 public class Data implements Model {
-    private RetrofitAPI client = RetrofitClient.getInstance().create(RetrofitAPI.class);
-    private DeviceLocation deviceLocation = new DeviceLocation();
+
+    @Inject
+    RetrofitAPI client;
+
+    @Inject
+    DeviceLocation deviceLocation;
+
+    public Data() {
+        AppComponent component = App.getComponent();
+        if(component != null) component.injectData(this);
+    }
 
     @Override
     public Observable<RootWeatherCities> getCitiesWeather(LatLngBounds latLngBounds, float zoom) {

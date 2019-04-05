@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.baulin.alexander.weatherapp.dagger2.modules.AppModule;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
+import com.baulin.alexander.weatherapp.mvp.model.Data;
 import com.baulin.alexander.weatherapp.mvp.presenter.Presenter;
 import com.baulin.alexander.weatherapp.mvp.view.adapter.WeatherAdapter;
 
@@ -18,5 +19,6 @@ public interface AppComponent {
     Model getData();
     void injectPresenter(Presenter presenter);
     void injectPostAdapter(WeatherAdapter adapter);
+    void injectData(Data data);
 
 }

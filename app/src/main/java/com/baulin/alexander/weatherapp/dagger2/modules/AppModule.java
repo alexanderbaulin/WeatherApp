@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.model.Data;
+import com.baulin.alexander.weatherapp.mvp.model.DeviceLocation;
+import com.baulin.alexander.weatherapp.mvp.model.retrofit.RetrofitAPI;
+import com.baulin.alexander.weatherapp.mvp.model.retrofit.RetrofitClient;
 
 import javax.inject.Singleton;
 
@@ -29,4 +32,17 @@ public class AppModule {
     Model getData() {
         return new Data();
     }
+
+    @Provides
+    @Singleton
+    DeviceLocation getDeviceLocation() {
+        return new DeviceLocation();
+    }
+
+    @Provides
+    @Singleton
+    RetrofitAPI getRetrofitClient() {
+        return RetrofitClient.getInstance().create(RetrofitAPI .class);
+    }
+
 }
