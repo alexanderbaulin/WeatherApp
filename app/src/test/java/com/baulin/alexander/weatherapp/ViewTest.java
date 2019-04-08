@@ -30,10 +30,8 @@ public class ViewTest {
 
     @Mock
     private Presenter presenter;
-
     @Mock
     private GoogleMap map;
-
     @InjectMocks
     private Main activity;
 

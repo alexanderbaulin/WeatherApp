@@ -30,10 +30,8 @@ public class ModelTest {
 
     @Mock
     private DeviceLocation deviceLocation;
-
     @Mock
     private RetrofitAPI client;
-
     @InjectMocks
     private Data data;
 
@@ -56,8 +54,10 @@ public class ModelTest {
 
     @Test
     public void testCityRequest() {
-        data.getCurrentCityWeather("cityName");
-        verify(client).getCityWeatherFromJSON("cityName", "metric", RetrofitClient.API_key);
+        String testName = "cityName";
+
+        data.getCurrentCityWeather(testName);
+        verify(client).getCityWeatherFromJSON(testName, "metric", RetrofitClient.API_key);
     }
 
     @Test

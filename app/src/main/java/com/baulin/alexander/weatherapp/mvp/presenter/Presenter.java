@@ -41,13 +41,15 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
     public Presenter() {
         AppComponent component = App.getComponent();
         if(component != null) component.injectPresenter(this);
+
+        citiesWeatherRequests = new CompositeDisposable();
+        cityDetailWeatherRequests = new CompositeDisposable();
     }
 
     public void setActivity(Main activity) {
         view = new WeakReference<View>(activity);
+
         setNetworkChangeReceiver();
-        citiesWeatherRequests = new CompositeDisposable();
-        cityDetailWeatherRequests = new CompositeDisposable();
     }
 
     @Override

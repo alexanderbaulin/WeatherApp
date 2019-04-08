@@ -77,6 +77,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         presenter.setActivity(this);
 
         if(savedInstanceState == null) {
+            Log.d("savedInstanceState", "savedInstanceState = null");
             LocationCallback mLocationCallback = createCallback();
             presenter.getDeviceLocation(mLocationCallback);
         }
@@ -100,7 +101,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         });
 
-        if (isFineLocationPermissionGranted()) {
+        if (!isFineLocationPermissionGranted()) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, App.REQUEST_CODE_FINE_LOCATION);
         } else
             map.setMyLocationEnabled(true);
@@ -113,6 +114,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         switch (requestCode) {
             case App.REQUEST_CODE_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("savedInstanceState", "Location granted");
                     map.setMyLocationEnabled(true);
                     LocationCallback mLocationCallback = createCallback();
                     presenter.getDeviceLocation(mLocationCallback);
