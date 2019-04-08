@@ -57,9 +57,9 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         fixScreenOrientation(true);
+
+        setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
 
@@ -93,6 +93,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         map.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
+                fixScreenOrientation(true);
+
                 Log.d("camera", "onCameraIdle " + map.getCameraPosition().target + "zoom " + map.getCameraPosition().zoom);
                 Log.d("camera", "visible bounds " + map.getProjection().getVisibleRegion().latLngBounds);
 
@@ -149,6 +151,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         adapter.setData(list);
         adapter.setOnClickListener(this);
         recyclerView.setAdapter(adapter);
+
+        fixScreenOrientation(false);
     }
 
     @Override
@@ -164,6 +168,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         intent.putExtra(App.NAME_WIND_CLASS, rootWeatherCity.wind());
 
         startActivity(intent);
+
+        fixScreenOrientation(false);
 
     }
 
@@ -211,7 +217,6 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
                 CameraUpdate position = CameraUpdateFactory.newLatLngZoom(coordinates , App.DEFAULT_ZOOM);
                 map.moveCamera(position);
 
-                fixScreenOrientation(false);
             }
         };
     }
