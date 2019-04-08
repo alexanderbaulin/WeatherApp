@@ -33,6 +33,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
         this.cities = cities;
     }
 
+    public WeatherCityItem getItem(int position) {
+        return cities.get(position);
+    }
+
     @NonNull
     @Override
     public WeatherViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

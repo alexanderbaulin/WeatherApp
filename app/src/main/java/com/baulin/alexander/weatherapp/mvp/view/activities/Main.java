@@ -3,6 +3,7 @@ package com.baulin.alexander.weatherapp.mvp.view.activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -57,6 +58,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fixScreenOrientation(true);
 
         ButterKnife.bind(this);
 
@@ -207,6 +210,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
                 LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
                 CameraUpdate position = CameraUpdateFactory.newLatLngZoom(coordinates , App.DEFAULT_ZOOM);
                 map.moveCamera(position);
+
+                fixScreenOrientation(false);
             }
         };
     }
@@ -214,5 +219,21 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     public boolean isFineLocationPermissionGranted() {
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         return permission == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public GoogleMap getMap() {
+        return map;
+    }
+
+    public WeatherAdapter getWeatherAdapter() {
+        return (WeatherAdapter) recyclerView.getAdapter();
+    }
+
+    public void fixScreenOrientation(boolean fixScreen) {
+        if(fixScreen) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        }
     }
 }
