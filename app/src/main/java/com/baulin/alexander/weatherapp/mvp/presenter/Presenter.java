@@ -113,6 +113,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
 
     @Override
     public void onDestroyActivity() {
+        if(citiesWeatherRequests == null || cityDetailWeatherRequests == null) return;
         citiesWeatherRequests.clear();
         cityDetailWeatherRequests.clear();
     }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.R;
+import com.baulin.alexander.weatherapp.Utils;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Main;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Sys;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Weather;
@@ -76,8 +77,8 @@ public class DetailCityWeather extends AppCompatActivity {
         String humidity = String.valueOf(main.humidity()) + "%";
         String description = weather.description();
         String pressure = String.valueOf(main.pressure()) + " hpa";
-        String sunrise = App.convertUnixToHour(sys.sunrise());
-        String sunset = App.convertUnixToHour(sys.sunset());
+        String sunrise = Utils.convertUnixToHour(sys.sunrise());
+        String sunset = Utils.convertUnixToHour(sys.sunset());
 
         txtDescription.setText(description);
         txtCityName.setText(name);

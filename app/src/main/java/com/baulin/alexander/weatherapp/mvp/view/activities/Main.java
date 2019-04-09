@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.R;
 
+import com.baulin.alexander.weatherapp.Utils;
 import com.baulin.alexander.weatherapp.dagger2.components.DaggerMainActivityComponent;
 import com.baulin.alexander.weatherapp.dagger2.components.MainActivityComponent;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Presenter;
