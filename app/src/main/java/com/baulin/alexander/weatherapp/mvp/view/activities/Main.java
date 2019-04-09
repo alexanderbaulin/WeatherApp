@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.baulin.alexander.weatherapp.App;
+import com.baulin.alexander.weatherapp.Logger;
 import com.baulin.alexander.weatherapp.R;
 
 import com.baulin.alexander.weatherapp.Utils;
@@ -77,7 +78,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         presenter.setActivity(this);
 
         if(savedInstanceState == null) {
-            Log.d("savedInstanceState", "savedInstanceState = null");
+            Logger.d("savedInstanceState", "savedInstanceState = null");
             LocationCallback mLocationCallback = createCallback();
             presenter.getDeviceLocation(mLocationCallback);
         }
@@ -92,8 +93,8 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             public void onCameraIdle() {
                 fixScreenOrientation(true);
 
-                Log.d("camera", "onCameraIdle " + map.getCameraPosition().target + "zoom " + map.getCameraPosition().zoom);
-                Log.d("camera", "visible bounds " + map.getProjection().getVisibleRegion().latLngBounds);
+                Logger.d("camera", "onCameraIdle " + map.getCameraPosition().target + "zoom " + map.getCameraPosition().zoom);
+                Logger.d("camera", "visible bounds " + map.getProjection().getVisibleRegion().latLngBounds);
 
                 LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
                 float zoom = map.getCameraPosition().zoom;
@@ -116,14 +117,14 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         switch (requestCode) {
             case App.REQUEST_CODE_FINE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("savedInstanceState", "Location granted");
+                    Logger.d("savedInstanceState", "Location granted");
                     map.setMyLocationEnabled(true);
                     LocationCallback mLocationCallback = createCallback();
                     presenter.getDeviceLocation(mLocationCallback);
-                    Log.d("permission", "granted");
+                    Logger.d("permission", "granted");
                 } else {
                     map.setMyLocationEnabled(false);
-                    Log.d("permission", "denied");
+                    Logger.d("permission", "denied");
                 }
             }
         }
@@ -137,12 +138,12 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
     @Override
     public void display(List<WeatherCityItem> list) {
-        Log.d("display", "-------------------");
-        Log.d("display", "size = " + list.size());
+        Logger.d("display", "-------------------");
+        Logger.d("display", "size = " + list.size());
         for(int i = 0; i < list.size(); i++) {
-            Log.d("display", "city name = " + list.get(i).name());
-            Log.d("display", "clouds = " + list.get(i).clouds().all());
-            Log.d("display", "city id = " + list.get(i).id() + " " + list.get(i).weather().get(0).id());
+            Logger.d("display", "city name = " + list.get(i).name());
+            Logger.d("display", "clouds = " + list.get(i).clouds().all());
+            Logger.d("display", "city id = " + list.get(i).id() + " " + list.get(i).weather().get(0).id());
         }
         WeatherAdapter adapter = new WeatherAdapter();
         adapter.setData(list);
@@ -154,7 +155,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
     @Override
     public void display(RootWeatherCity rootWeatherCity) {
-        Log.d("onClick", "display " + rootWeatherCity.name() + " t = " + rootWeatherCity.main().temp());
+        Logger.d("onClick", "display " + rootWeatherCity.name() + " t = " + rootWeatherCity.main().temp());
 
         Intent intent = new Intent(this, DetailCityWeather.class);
 
@@ -172,7 +173,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
     @Override
     public void onItemClick(String cityName) {
-        Log.d("click", "click + " + cityName);
+        Logger.d("click", "click + " + cityName);
         presenter.getCurrentCityWeather(cityName);
     }
 

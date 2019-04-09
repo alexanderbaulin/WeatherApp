@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.baulin.alexander.weatherapp.App;
+import com.baulin.alexander.weatherapp.Logger;
 import com.baulin.alexander.weatherapp.dagger2.components.AppComponent;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.interfaces.View;
@@ -59,14 +60,14 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                 .subscribe(new Consumer<RootWeatherCity>() {
                                @Override
                                public void accept(RootWeatherCity rootWeatherCity) throws Exception {
-                                   Log.d("onClick", "getCurrentCity " + rootWeatherCity.name());
+                                   Logger.d("onClick", "getCurrentCity " + rootWeatherCity.name());
                                    view.get().display(rootWeatherCity);
                                }
                            }, new Consumer<Throwable>() {
                                @Override
                                public void accept(Throwable throwable) throws Exception {
                                    view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");
-                                   //Log.d("onClick", "error getCurrentCity " + throwable.getMessage());
+                                   Logger.d("onClick", "error getCurrentCity " + throwable.getMessage());
                                }
                            }
                 )
@@ -92,7 +93,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                             view.get().hideCitiesSheet(true);
                         else {
                             view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");
-                            Log.d("autovalue", "Error: " + throwable.getMessage());
+                            Logger.d("autovalue", "Error: " + throwable.getMessage());
                         }
                     }
                 })

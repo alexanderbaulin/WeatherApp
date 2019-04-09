@@ -62,7 +62,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.d("click", "onClick");
                 String cityName = item.name();
                 onClickListener.onItemClick(cityName);
             }
