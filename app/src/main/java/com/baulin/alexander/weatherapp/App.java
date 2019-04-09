@@ -20,11 +20,7 @@ public class App extends Application {
     public static final int REQUEST_CODE_FINE_LOCATION = 1;
     public static final int DEFAULT_ZOOM = 12;
 
-    public static final String NAME_MAIN_CLASS = Main.class.getCanonicalName();
-    public static final String NAME_SYS_CLASS = Sys.class.getCanonicalName();
-    public static final String NAME_WEATHER_CLASS = Weather.class.getCanonicalName();
-    public static final String NAME_WIND_CLASS = Wind.class.getCanonicalName();
-    public static final String CITY_NAME = "cityName";
+    public static final String NAME_DETAIL_WEATHER_CLASS = "DetailCityWeatherDTOClass";
 
     private static App instance;
     private static ConnectivityManager cm;

@@ -58,11 +58,13 @@ public class DetailCityWeather extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String name = intent.getStringExtra(App.CITY_NAME);
-        Main main = intent.getParcelableExtra(App.NAME_MAIN_CLASS);
-        Sys sys = intent.getParcelableExtra(App.NAME_SYS_CLASS);
-        Weather weather = intent.getParcelableExtra(App.NAME_WEATHER_CLASS);
-        Wind wind = intent.getParcelableExtra(App.NAME_WIND_CLASS);
+        AutoValue_DetailCityWeatherDTO detailWeather = intent.getParcelableExtra(App.NAME_DETAIL_WEATHER_CLASS);
+
+        String name = detailWeather.name();
+        Main main = detailWeather.main();
+        Sys sys = detailWeather.sys();
+        Weather weather = detailWeather.weather();
+        Wind wind = detailWeather.wind();
 
         String url =
                 "https://openweathermap.org/img/w/" +

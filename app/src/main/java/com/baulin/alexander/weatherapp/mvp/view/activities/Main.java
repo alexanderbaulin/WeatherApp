@@ -13,16 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.Logger;
 import com.baulin.alexander.weatherapp.R;
 
-import com.baulin.alexander.weatherapp.Utils;
-import com.baulin.alexander.weatherapp.dagger2.components.DaggerMainActivityComponent;
-import com.baulin.alexander.weatherapp.dagger2.components.MainActivityComponent;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Presenter;
 import com.baulin.alexander.weatherapp.mvp.interfaces.View;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.WeatherCityItem;
@@ -159,11 +155,14 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         Intent intent = new Intent(this, DetailCityWeather.class);
 
-        intent.putExtra(App.CITY_NAME, rootWeatherCity.name());
-        intent.putExtra(App.NAME_MAIN_CLASS, rootWeatherCity.main());
-        intent.putExtra(App.NAME_SYS_CLASS, rootWeatherCity.sys());
-        intent.putExtra(App.NAME_WEATHER_CLASS, rootWeatherCity.weather().get(0));
-        intent.putExtra(App.NAME_WIND_CLASS, rootWeatherCity.wind());
+        AutoValue_DetailCityWeatherDTO detailWeather = new AutoValue_DetailCityWeatherDTO(
+                        rootWeatherCity.name(),
+                        rootWeatherCity.main(), rootWeatherCity.sys(),
+                        rootWeatherCity.weather().get(0),
+                        rootWeatherCity.wind()
+        );
+
+        intent.putExtra(App.NAME_DETAIL_WEATHER_CLASS, detailWeather);
 
         startActivity(intent);
 
