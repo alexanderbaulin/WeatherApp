@@ -64,11 +64,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
         ButterKnife.bind(this);
 
-        MainActivityComponent component = DaggerMainActivityComponent.builder()
-                .appComponent(App.getComponent())
-                .build();
-
-        component.injectMainActivity(this);
+        App.getMainActivityComponent().injectMainActivity(this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 

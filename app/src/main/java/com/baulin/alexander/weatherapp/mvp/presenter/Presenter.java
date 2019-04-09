@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.icu.text.LocaleDisplayNames;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
@@ -13,7 +12,6 @@ import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.dagger2.components.AppComponent;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.interfaces.View;
-import com.baulin.alexander.weatherapp.mvp.model.Data;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.RootWeatherCities;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
 import com.baulin.alexander.weatherapp.mvp.view.activities.Main;
@@ -39,7 +37,7 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
     private WeakReference<View> view;
 
     public Presenter() {
-        AppComponent component = App.getComponent();
+        AppComponent component = App.getAppComponent();
         if(component != null) component.injectPresenter(this);
 
         citiesWeatherRequests = new CompositeDisposable();

@@ -1,29 +1,19 @@
 package com.baulin.alexander.weatherapp;
 
-import android.Manifest;
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.content.ContextCompat;
 
 import com.baulin.alexander.weatherapp.dagger2.components.AppComponent;
 import com.baulin.alexander.weatherapp.dagger2.components.DaggerAppComponent;
+import com.baulin.alexander.weatherapp.dagger2.components.DaggerMainActivityComponent;
+import com.baulin.alexander.weatherapp.dagger2.components.MainActivityComponent;
 import com.baulin.alexander.weatherapp.dagger2.modules.AppModule;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Main;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Sys;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Weather;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Wind;
-import com.baulin.alexander.weatherapp.mvp.model.retrofit.AutoValueGsonFactory;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapterFactory;
-import com.ryanharter.auto.value.gson.GsonTypeAdapterFactory;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class App extends Application {
 
@@ -39,7 +29,8 @@ public class App extends Application {
     private static App instance;
     private static ConnectivityManager cm;
 
-    private static AppComponent component;
+    private static AppComponent appComponent;
+    private static MainActivityComponent mainActivityComponent;
 
     public static Context getContext() {
         return instance.getApplicationContext();
@@ -52,13 +43,21 @@ public class App extends Application {
 
         cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        component = DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .build();
+
+        mainActivityComponent = DaggerMainActivityComponent.builder()
+                .appComponent(appComponent)
                 .build();
     }
 
-    public static AppComponent getComponent() {
-        return component;
+    public static AppComponent getAppComponent() {
+        return appComponent;
+    }
+
+    public static MainActivityComponent getMainActivityComponent() {
+        return mainActivityComponent;
     }
 
     public static boolean haveNetworkConnection() {

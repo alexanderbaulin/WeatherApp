@@ -2,7 +2,6 @@ package com.baulin.alexander.weatherapp.mvp.model;
 
 import com.baulin.alexander.weatherapp.App;
 import com.baulin.alexander.weatherapp.dagger2.components.AppComponent;
-import com.baulin.alexander.weatherapp.dagger2.modules.AppModule;
 import com.baulin.alexander.weatherapp.mvp.interfaces.Model;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.cities.RootWeatherCities;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.RootWeatherCity;
@@ -24,7 +23,7 @@ public class Data implements Model {
     DeviceLocation deviceLocation;
 
     public Data() {
-        AppComponent component = App.getComponent();
+        AppComponent component = App.getAppComponent();
         if(component != null) component.injectData(this);
     }
 
