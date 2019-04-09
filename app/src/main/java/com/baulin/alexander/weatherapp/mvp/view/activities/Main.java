@@ -152,22 +152,17 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
     @Override
     public void display(RootWeatherCity rootWeatherCity) {
         Logger.d("onClick", "display " + rootWeatherCity.name() + " t = " + rootWeatherCity.main().temp());
-
         Intent intent = new Intent(this, DetailCityWeather.class);
-
         AutoValue_DetailCityWeatherDTO detailWeather = new AutoValue_DetailCityWeatherDTO(
                         rootWeatherCity.name(),
                         rootWeatherCity.main(), rootWeatherCity.sys(),
                         rootWeatherCity.weather().get(0),
                         rootWeatherCity.wind()
         );
-
         intent.putExtra(App.NAME_DETAIL_WEATHER_CLASS, detailWeather);
-
         startActivity(intent);
 
         fixScreenOrientation(false);
-
     }
 
     @Override

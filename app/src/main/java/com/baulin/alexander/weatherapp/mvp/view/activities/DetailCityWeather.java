@@ -2,6 +2,7 @@ package com.baulin.alexander.weatherapp.mvp.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baulin.alexander.weatherapp.App;
+import com.baulin.alexander.weatherapp.Logger;
 import com.baulin.alexander.weatherapp.R;
 import com.baulin.alexander.weatherapp.Utils;
 import com.baulin.alexander.weatherapp.mvp.model.fromJSON.city.Main;
@@ -59,6 +61,11 @@ public class DetailCityWeather extends AppCompatActivity {
         Intent intent = getIntent();
 
         AutoValue_DetailCityWeatherDTO detailWeather = intent.getParcelableExtra(App.NAME_DETAIL_WEATHER_CLASS);
+
+        if(detailWeather == null) {
+            Logger.e("detailWeather", "detailWeather == null");
+            return;
+        }
 
         String name = detailWeather.name();
         Main main = detailWeather.main();
