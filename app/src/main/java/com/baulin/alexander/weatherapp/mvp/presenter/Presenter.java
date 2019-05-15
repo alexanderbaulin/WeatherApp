@@ -62,12 +62,16 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                                public void accept(RootWeatherCity rootWeatherCity) throws Exception {
                                    Logger.d("onClick", "getCurrentCity " + rootWeatherCity.name());
                                    view.get().display(rootWeatherCity);
+                                   view.get().fixScreenOrientation(false);
+                                   Logger.d("fixScreenOrientation", " accept(RootWeatherCity rootWeatherCity) fixScreenOrientation = false");
                                }
                            }, new Consumer<Throwable>() {
                                @Override
                                public void accept(Throwable throwable) throws Exception {
                                    view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");
-                                   Logger.d("onClick", "error getCurrentCity " + throwable.getMessage());
+                                   view.get().fixScreenOrientation(false);
+                                   Logger.d("fixScreenOrientation", " accept(RootWeatherCity rootWeatherCity) fixScreenOrientation = false");
+                                   Logger.d("onClick", "accept(Throwable throwable) " + throwable.getMessage());
                                }
                            }
                 )
@@ -89,10 +93,15 @@ public class Presenter implements com.baulin.alexander.weatherapp.mvp.interfaces
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        if(throwable.getMessage().contains("Expected BEGIN_OBJECT"))
+                        if(throwable.getMessage().contains("Expected BEGIN_OBJECT")) {
                             view.get().hideCitiesSheet(true);
+                            view.get().fixScreenOrientation(false);
+                            Logger.d("fixScreenOrientation", "cities accept(Throwable throwable) fixScreenOrientation = false");
+                        }
                         else {
                             view.get().showMessage("Error: " + throwable.getMessage() + ". Check Internet connection");
+                            view.get().fixScreenOrientation(false);
+                            Logger.d("fixScreenOrientation", "cities accept(Throwable throwable) fixScreenOrientation = false");
                             Logger.d("autovalue", "Error: " + throwable.getMessage());
                         }
                     }

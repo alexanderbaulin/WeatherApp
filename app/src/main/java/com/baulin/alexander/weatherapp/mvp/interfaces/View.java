@@ -11,4 +11,5 @@ public interface View {
     void setEmptyScreen(boolean setEmpty);
     void hideCitiesSheet(boolean setHidden);
     void showMessage(String message);
+    void fixScreenOrientation(boolean fixScreen);
 }

@@ -29,6 +29,5 @@ public class DeviceLocation {
 
     public void removeLocationUpdates() {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-        mLocationCallback = null;
     }
 }

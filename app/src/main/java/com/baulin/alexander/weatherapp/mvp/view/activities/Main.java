@@ -54,8 +54,10 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         fixScreenOrientation(true);
+        super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_main);
 
@@ -88,6 +90,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
             @Override
             public void onCameraIdle() {
                 fixScreenOrientation(true);
+                Logger.d("fixScreenOrientation", "void onCameraIdle() fixScreenOrientation = true");
 
                 Logger.d("camera", "onCameraIdle " + map.getCameraPosition().target + "zoom " + map.getCameraPosition().zoom);
                 Logger.d("camera", "visible bounds " + map.getProjection().getVisibleRegion().latLngBounds);
@@ -147,6 +150,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         recyclerView.setAdapter(adapter);
 
         fixScreenOrientation(false);
+        Logger.d("fixScreenOrientation", "display(List<WeatherCityItem> list) fixScreenOrientation = false");
     }
 
     @Override
@@ -163,6 +167,7 @@ public class Main extends AppCompatActivity implements OnMapReadyCallback, View,
         startActivity(intent);
 
         fixScreenOrientation(false);
+        Logger.d("fixScreenOrientation", "display(RootWeatherCity rootWeatherCity) fixScreenOrientation = false");
     }
 
     @Override
